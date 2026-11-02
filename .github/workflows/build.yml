@@ -1,0 +1,47 @@
+name: Build and Upload Python Wheel
+
+on:
+  push:
+    branches: [ main ]
+  release:
+    types: [ published ]
+
+jobs:
+  build_wheels:
+    name: Build wheels on ${{ matrix.os }} (${{ matrix.arch }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        include:
+          # 1. 리눅스 (x86_64)
+          - os: ubuntu-latest
+            arch: x64
+          # 2. 맥OS (Apple Silicon M 시리즈 및 Intel)
+          - os: macos-latest
+            arch: universal2
+          # 3. 윈도우 (x64)
+          - os: windows-latest
+            arch: x64
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build wheels using cibuildwheel
+        uses: pypa/cibuildwheel@v2.16.5
+        env:
+          CIBW_BUILD: "cp311-*"  # 필요에 따라 파이썬 버전 지정 (예: 파이썬 3.11 기준)
+          CIBW_ARCHS_LINUX: "x86_64"
+          CIBW_ARCHS_WINDOWS: "AMD64"
+          CIBW_ARCHS_MACOS: "universal2"
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: wheels-${{ matrix.os }}-${{ matrix.arch }}
+          path: ./wheelhouse/*.whl
