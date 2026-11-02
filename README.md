@@ -1,26 +1,15 @@
-# AI17291729
-# 🚀 C++/Python Hybrid High-Performance AI Engine
+AI란
+AI는 gemini 
 
-> **고정밀 C++20 코어**와 **Python**을 `pybind11`으로 바인딩하여, 오차 없는 수학적 연산과 극한의 성능을 동시에 추구하는 하이브리드 AI 엔진 프로젝트입니다.
 
----
 
-## 🛠️ Key Features (핵심 기능)
 
-1. **C++20 Native Core (`hyper_sigmoid.cpp`)**
-   * **Matrix Operations**: 고속 행렬 덧셈(`matrix_add`) 및 곱셈(`matrix_multiply`)
-   * **Loss Function**: 정밀한 평균 제곱 오차(MSE Loss) 계산
-   * **Gradient Descent**: 역전파 및 가중치 갱신(`update_weights`) 연산[cite: 1]
-2. **One-Shot Automated Build Pipeline**
-   * 파이썬 스크립트 실행 시 C++ 소스코드의 변경 사항을 스스로 감지하여(`os.path.getmtime`), 터미널 빌드 과정 없이 자동으로 컴파일 후 모듈을 동적 로드합니다.
-3. **Cross-Platform Compatibility**
-   * macOS, Linux, Windows 환경 대응 및 링커 옵션 자동 최적화 (`-undefined dynamic_lookup`)
 
----
+🔥 진짜 AI 엔진이 되기 위해 당장 구현해야 할 핵심 기능
+활성화 함수 (Activation Functions: Sigmoid / ReLU)
 
-## 📂 Project Structure
+선형 연산만으로는 복잡한 패턴을 학습할 수 없으니, 비선형성을 부여하는 sigmoid와 relu 함수를 C++ 레벨에서 밀리초 단위로 후려치게 박아넣어야 합니다.
 
-```text
-├── hyper_sigmoid.cpp   # C++ 고성능 AI 연산 코어 (pybind11 바인딩)
-├── main.py             # 원샷 자동 컴파일 및 엔진 테스트 오케스트레이터
-└── README.md           # 프로젝트 문서
+순전파 & 역전파 (Forward & Backward Propagation)
+
+입력값이 들어와서 레이어를 통과하고(순전파), 오차를 계산한 뒤 미분값을 통해 가중치를 거꾸로 보정하는(역전파) 신경망의 핵심 학습 사이클을 C++로 구현해야 합니다.
